@@ -1,0 +1,12 @@
+build:
+  nodes:
+    coverage:
+      tests:
+        before:
+          - command: npm start
+            background: true
+        override:
+          - command: npm test
+            coverage:
+              file: coverage/clover.xml
+              format: clover

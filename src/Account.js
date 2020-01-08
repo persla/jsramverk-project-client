@@ -72,8 +72,8 @@ handleSubmit = (event) => {
   this.setState({setpage: true});
 
 
-  console.log(this.state.inputAccount);
-   console.log(this.state.account);
+  // console.log(this.state.inputAccount);
+  //  console.log(this.state.account);
 
  // if(validateForm(this.state.errors) && this.state.fullName !== null) {
  //      this.setState({formValidation: 'Giltigt registreringsformulär!'});

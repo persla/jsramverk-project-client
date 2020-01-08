@@ -110,7 +110,7 @@ export default createReactClass({
   },
 
 componentDidMount() {
-    axios.get(`http://localhost:1338/reports/`+localStorage.getItem('currentuser'))
+    axios.get(`https://project-api.teachmeapp.me/reports/`+localStorage.getItem('currentuser'))
       .then(res => {
           const utan = res.data.filter( test =>{
               return test.status === false;

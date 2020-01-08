@@ -44,8 +44,8 @@ export default createReactClass({
         const { name, value } = event.target;
         this.setState({[name]: parseInt(value)});
         this.setState({type: "Sålt"});
-        console.log(this.state.saabamount);
-        console.log(this.state.saabbuy);
+        // console.log(this.state.saabamount);
+        // console.log(this.state.saabbuy);
         // console.log(this.state.saabbuy +"saab");
         // console.log(this.state.volvobuy +"volvo");
         // console.log(this.state.fiatbuy +"fiat");
@@ -108,11 +108,11 @@ export default createReactClass({
            // console.log(this.state.stockportfolio);
 
 
-          console.log(this.state.account);
+          // console.log(this.state.account);
   },
 
 componentDidMount() {
-    axios.get(`http://localhost:1338/reports/`+localStorage.getItem('currentuser'))
+    axios.get(`https://project-api.teachmeapp.me/reports/`+localStorage.getItem('currentuser'))
       .then(res => {
           const utan = res.data.filter( test =>{
               return test.status === false;

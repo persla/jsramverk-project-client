@@ -15,13 +15,14 @@ function Admin(props) {
   }
 
   return (
-    <Card>
 
-      <div>Logga ut från appen</div>
+    <div className='form-wrapper'>
+
+    <h2>Utloggning</h2>
       <Button onClick={logOut}>Logga ut</Button>
      {localStorage.length === 0 ? <h4>Du är nu utloggad! Vi ses en annan gång!</h4> : null}
 
-      </Card>
+      </div>
   );
 }
 

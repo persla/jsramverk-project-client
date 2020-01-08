@@ -115,4 +115,14 @@ test.describe("Stockcars", function() {
 
         done();
     });
+
+    test.it("Test go to utloggning", function(done) {
+        // try use nav link
+        goToNavLink("Logga ut");
+
+        assertH2("UTLOGGNING");
+        matchUrl("/logout" );
+
+        done();
+    });
 });

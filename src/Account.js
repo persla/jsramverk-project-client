@@ -118,8 +118,8 @@ componentDidMount() {
         this.setState({ fordcurrentvalue: this.state.fordamount ? (input.fordLast.startingPoint * this.state.fordamount): 0});
         this.setState({ fiatcurrentvalue: this.state.fiatamount ? (input.fiatLast.startingPoint * this.state.fiatamount): 0});
       })
-      this.socket = io('localhost:9000');
-      // this.socket = io('https://socket.teachmeapp.me');
+      // this.socket = io('localhost:9000');
+      this.socket = io('https://project-socket.teachmeapp.me');
       // const socket = io('https://socket.teachmeapp.me');
       this.socket.on('connect', () => {
      console.log("Connected");

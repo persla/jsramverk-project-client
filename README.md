@@ -6,7 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 [![Build Status](https://scrutinizer-ci.com/g/persla/jsramverk-project-client/badges/build.png?b=master)](https://scrutinizer-ci.com/g/persla/jsramverk-project-client/build-status/master)
 
-## Use-cases som är testade med Selenium och Scrutinizer
+## Test Frontend: Use-cases som är testade med Selenium och Scrutinizer
 Use-case 1: “Användaren kunna trycka på en länk för att hamna på Registreringssidan.”
 
 Use-case 2: “Användaren ska kunna trycka på en länk för att hamna på Inloggningssidan.”

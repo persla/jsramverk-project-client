@@ -27,8 +27,8 @@ class SellSite extends React.Component{
             messages: [],
     }
 
-        this.socket = io('localhost:9000');
-        // this.socket = io('https://socket.teachmeapp.me');
+        // this.socket = io('localhost:9000');
+        this.socket = io('https://project-socket.teachmeapp.me');
         // const socket = io('https://socket.teachmeapp.me');
         this.socket.on('connect', () => {
        console.log("Connected");

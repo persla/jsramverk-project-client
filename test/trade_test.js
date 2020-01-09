@@ -62,8 +62,21 @@ test.describe("Stockcars", function() {
         });
     }
 
+    function assertH2not(target) {
+        browser.findElement(By.css("h1")).then(function(element) {
+            element.getText().then(function(text) {
+                assert.equal(text, target);
+            });
+        }).catch((e) => {
+            if(e.name === 'NoSuchElementError') {
+                console.log('Element not found');
+                return 'Element not found'
+            }
+        })
 
+    }
 
+// assertNotEquals
     // Test case
     test.it("Test index", function(done) {
         let promise = browser.getTitle();
@@ -122,6 +135,39 @@ test.describe("Stockcars", function() {
 
         assertH2("UTLOGGNING");
         matchUrl("/logout" );
+
+        done();
+    });
+
+    test.it("Test unsigned users cannot access the account", function(done) {
+        // try use nav link
+        goToNavLink("Konto");
+
+        assertH2not('Element not found');
+        matchUrl("/Account" );
+
+        done();
+    });
+
+    test.it("Test unsigned users cannot access the buy-vy", function(done) {
+        // try use nav link
+        goToNavLink("Köp");
+
+        assertH2not('Element not found');
+        matchUrl("/BuySite" );
+
+        done();
+    });
+
+    test.it("Test get background color", function(done) {
+        goToNavLink("Home");
+
+        // display element background color
+        browser.findElement(By.className("stock-info")).then(function(displayElement) {
+            displayElement.getCssValue("background-color").then(function(bgColor) {
+                assert.equal(bgColor, "rgb(245, 245, 245)");
+            });
+        });
 
         done();
     });

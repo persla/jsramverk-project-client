@@ -109,6 +109,32 @@ var buyStock = {
         // console.log(res.data.data.user);
     },
 
+    addToAll: async function(saabstock, volvostock,
+    fiatstock, fordstock) {
+            let stock = "All";
+        var payloadInput = {
+            type: stock,
+            saabInStock: saabstock,
+            volvoInStock: volvostock,
+            fordInStock: fiatstock,
+            fiatInStock: fiatstock,
+        };
+
+        // const filterObject = (obj, filter, filterValue) =>
+        // Object.keys(obj).reduce((acc, val) =>
+        // (obj[val][filter] === filterValue ? acc : {
+        //     ...acc,
+        //     [val]: obj[val]
+        //     }
+        // ), {});
+        //
+        // var payload = filterObject(payloadInput, "amount", 0);
+        let res = await axios.post('https://project-api.teachmeapp.me/reports', payloadInput);
+        console.log(payloadInput);
+        // console.log(res);
+        // console.log(res.data.data.user);
+    },
+
     // revReport: async function(name, description, texten, id) {
     //     var payload = {
     //         name: name,

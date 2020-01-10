@@ -34,6 +34,10 @@ export default createReactClass({
         stockportfolio: [],
         type: "",
         account: 0,
+        saabInStock: 0,
+        volvoInStock: 0,
+        fordInStock: 0,
+        fiatInStock: 0,
 };
 
 
@@ -102,6 +106,11 @@ export default createReactClass({
            (input.fiatLast.startingPoint * this.state.fiatbuy) +
            (input.fordLast.startingPoint * this.state.fordbuy), localStorage.getItem('currentuser'));
 
+           buyStock.addToAll((this.state.saabInStock + this.state.saabamount),
+           (this.state.volvoInStock + this.state.volvoamount),
+           (this.state.fordInStock + this.state.fordamount),
+           (this.state.fiatInStock + this.state.fiatamount),);
+
 
 
 
@@ -129,6 +138,26 @@ componentDidMount() {
           this.setState({ fordamount: utan.length ? utan[0].fordamount : 0});
           this.setState({ fiatamount: utan.length ? utan[0].fiatamount : 0});
       })
+
+      axios.get(`https://project-api.teachmeapp.me/reports/`)
+        .then(res => {
+            console.log(res.data);
+            // const utan = res.data.filter( test =>{
+            //     return test.status === false;
+            // });
+            // console.log(utan);
+            // const account = res.data.filter( test =>{
+            //     return test.status === "account";
+            // });
+            // console.log(stockportfolio1.data[0]["saab"].amount);
+            // ourStorage.cabinet["top drawer"].folder2
+            // utan.length ? utan[0].saabamount : 0
+            // this.setState({ account: account.length ? account[0].amount : 0});
+            this.setState({ saabInStock: res.data[0].saabInStock});
+            this.setState({ volvoInStock: res.data[0].volvoInStock});
+            this.setState({ fordInStock: res.data[0].fordInStock});
+            this.setState({ fiatInStock: res.data[0].fiatInStock});
+        })
 
 },
 

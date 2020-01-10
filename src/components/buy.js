@@ -34,6 +34,10 @@ export default createReactClass({
         stockportfolio: [],
         type: "",
         account: 0,
+        saabInStock: 0,
+        volvoInStock: 0,
+        fordInStock: 0,
+        fiatInStock: 0,
 };
 
 
@@ -98,15 +102,18 @@ export default createReactClass({
 
     buyStock.addToAccount(this.state.account - ((input.saabLast.startingPoint * this.state.saabbuy) +
     (input.volvoLast.startingPoint * this.state.volvobuy) +
-(input.fiatLast.startingPoint * this.state.fiatbuy) +
-(input.fordLast.startingPoint * this.state.fordbuy)).toFixed(2), localStorage.getItem('currentuser'));
+    (input.fiatLast.startingPoint * this.state.fiatbuy) +
+    (input.fordLast.startingPoint * this.state.fordbuy)).toFixed(2), localStorage.getItem('currentuser'));
+
+    buyStock.addToAll((this.state.saabInStock - this.state.saabamount),
+    (this.state.volvoInStock - this.state.volvoamount),
+    (this.state.fordInStock - this.state.fordamount),
+    (this.state.fiatInStock - this.state.fiatamount),);
 
            // console.log(this.state.type);
 
            // console.log(this.state.stockportfolio);
 
-
-          // console.log(this.getInitialState);
   },
 
 componentDidMount() {
@@ -129,6 +136,26 @@ componentDidMount() {
           this.setState({ fiatamount: utan.length ? utan[0].fiatamount : 0});
       })
 
+      axios.get(`https://project-api.teachmeapp.me/reports/`)
+        .then(res => {
+            console.log(res.data);
+            // const utan = res.data.filter( test =>{
+            //     return test.status === false;
+            // });
+            // console.log(utan);
+            // const account = res.data.filter( test =>{
+            //     return test.status === "account";
+            // });
+            // console.log(stockportfolio1.data[0]["saab"].amount);
+            // ourStorage.cabinet["top drawer"].folder2
+            // utan.length ? utan[0].saabamount : 0
+            // this.setState({ account: account.length ? account[0].amount : 0});
+            this.setState({ saabInStock: res.data[0].saabInStock});
+            this.setState({ volvoInStock: res.data[0].volvoInStock});
+            this.setState({ fordInStock: res.data[0].fordInStock});
+            this.setState({ fiatInStock: res.data[0].fiatInStock});
+        })
+
 },
 
 
@@ -147,11 +174,14 @@ componentDidMount() {
 
       <div className="stock-info">
 
-     <h4>Saab 900 1981</h4>
+     <h4>Saab 900 1981{this.state.saabInStock}</h4>
      <p><b>Kurs(&#8383;):</b> {input.saabLast.startingPoint}</p>
      <p><b>Index:</b> {Math.floor(input.saabLast.startingPoint/20*100)}</p>
-     <b>Köporder: </b><input type='number' min="0" placeholder="0" name='saabbuy' onChange={this.handleChange}/>
-     <p><b>S:a(&#8383;):</b> {(input.saabLast.startingPoint * this.state.saabbuy).toFixed(2)}</p>
+     <p><b>Tillgängligt:</b> {this.state.saabInStock}</p>
+     <b>Köporder: </b><input type='number' min="0" max={this.state.saabInStock} placeholder="0" name='saabbuy' onChange={this.handleChange}/>
+     {this.state.saabInStock < this.state.saabbuy || isNaN(this.state.saabbuy)? <p className="errorstock">OBS! Övertrassering.</p> :
+      <p><b>S:a(&#8383;):</b> {(input.saabLast.startingPoint * this.state.saabbuy).toFixed(2)}</p>}
+
 
 
 
@@ -160,24 +190,30 @@ componentDidMount() {
     <h4>Volvo 740 1984 </h4>
      <p><b>Kurs(&#8383;):</b> {input.volvoLast.startingPoint}</p>
     <p><b>Index:</b> {Math.floor(input.volvoLast.startingPoint/20*100)}</p>
-    <b>Köporder: </b><input type='number' min="0" placeholder="0" name='volvobuy' onChange={this.handleChange}/>
-     <p><b>S:a(&#8383;):</b> {(input.volvoLast.startingPoint * this.state.volvobuy).toFixed(2)}</p>
+    <p><b>Tillgängligt:</b> {this.state.volvoInStock}</p>
+    <b>Köporder: </b><input type='number' min="0" max={this.state.volvoInStock} placeholder="0" name='volvobuy' onChange={this.handleChange}/>
+    {this.state.volvoInStock < this.state.volvobuy || isNaN(this.state.volvobuy)? <p className="errorstock">OBS! Övertrassering.</p> :
+     <p><b>S:a(&#8383;):</b> {(input.volvoLast.startingPoint * this.state.volvobuy).toFixed(2)}</p>}
 
     </div>
     <div className="stock-info">
    <h4>Fiat 500 1980 </h4>
     <p><b>Kurs(&#8383;):</b> {input.fiatLast.startingPoint}</p>
    <p><b>Index:</b> {Math.floor(input.fiatLast.startingPoint/20*100)}</p>
-   <b>Köporder: </b><input type='number' min="0" placeholder="0" name='fiatbuy' onChange={this.handleChange}/>
-   <p><b>S:a(&#8383;):</b> {(input.fiatLast.startingPoint * this.state.fiatbuy).toFixed(2)}</p>
+   <p><b>Tillgängligt:</b> {this.state.fiatInStock}</p>
+   <b>Köporder: </b><input type='number' min="0" max={this.state.fiatInStock} placeholder="0" name='fiatbuy' onChange={this.handleChange}/>
+   {this.state.fiatInStock < this.state.fiatbuy || isNaN(this.state.fiatbuy)? <p className="errorstock">OBS! Övertrassering.</p> :
+    <p><b>S:a(&#8383;):</b> {(input.fiatLast.startingPoint * this.state.fiatbuy).toFixed(2)}</p>}
 
     </div>
     <div className="stock-info">
       <h4>Ford Fiesta 1983 </h4>
       <p><b>Kurs(&#8383;):</b> {input.fordLast.startingPoint}</p>
       <p><b>Index:</b> {Math.floor(input.fordLast.startingPoint/20*100)}</p>
-      <b>Köporder: </b><input type='number' min="0" placeholder="0" name='fordbuy' onChange={this.handleChange}/>
-      <p><b>S:a(&#8383;):</b> {(input.fordLast.startingPoint * this.state.fordbuy).toFixed(2)}</p>
+      <p><b>Tillgängligt:</b> {this.state.fordInStock}</p>
+      <b>Köporder: </b><input type='number' min="0" max={this.state.fordInStock}  placeholder="0" name='fordbuy' onChange={this.handleChange}/>
+      {this.state.fordInStock < this.state.fordbuy || isNaN(this.state.fordbuy)? <p className="errorstock">OBS! Övertrassering.</p> :
+       <p><b>S:a(&#8383;):</b> {(input.fordLast.startingPoint * this.state.fordbuy).toFixed(2)}</p>}
 
       </div>
 
@@ -198,7 +234,12 @@ componentDidMount() {
       {this.state.account < ((input.saabLast.startingPoint * this.state.saabbuy) +
       (input.volvoLast.startingPoint * this.state.volvobuy)+
       (input.fiatLast.startingPoint * this.state.fiatbuy)+
-      (input.fordLast.startingPoint * this.state.fordbuy))
+      (input.fordLast.startingPoint * this.state.fordbuy)) ||
+      this.state.saabInStock < this.state.saabbuy ||
+      this.state.volvoInStock < this.state.volvobuy ||
+      this.state.fiatInStock < this.state.fiatbuy ||
+      this.state.fordInStock < this.state.fordbuy
+
           ?
          <button disabled>KÖP</button>
             :

@@ -144,10 +144,6 @@ componentDidMount() {
       // console.log(this.state.stockportfolio);
 }
 
-
-
-
-
 render() {
   if (this.state.setpage) {
     return <Redirect to="/" />;

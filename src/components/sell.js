@@ -48,47 +48,14 @@ export default createReactClass({
         const { name, value } = event.target;
         this.setState({[name]: parseInt(value)});
         this.setState({type: "Sålt"});
-        // console.log(this.state.saabamount);
-        // console.log(this.state.saabbuy);
-        // console.log(this.state.saabbuy +"saab");
-        // console.log(this.state.volvobuy +"volvo");
-        // console.log(this.state.fiatbuy +"fiat");
-        // console.log(this.state.fordbuy +"ford");
-        // this.setState({saab:{amount: this.state.saabbuy, rate: input.saabLast.startingPoint}});
-
-              // console.log(this.state.saab);
-        // this.setState({saab: [this.state.saabbuy, this.state.saabbuyvalue]});
-
-        // this.setState({volvobuy: value});
-
-          // this.setState({name: value});
       },
-
-
-  // handleChange: (event) => {
-  //     event.preventDefault();
-  //     // const { name, value } = event.target;
-  //     // this.setState({saabbuy: value});
-  //     //   console.log(this.state.saabbuy +"test");
-  //     //
-  //
-  //
-  // },
 
 
   handleSubmit: function(event) {
       event.preventDefault();
-      // buyStock.getReport();
-        // this.setState({saab:{amount: this.state.saabbuy, rate: input.saabLast.startingPoint}});
+
       const { name, value } = event.target;
       this.setState({[name]: parseInt(value)});
-      // this.setState({saab: [this.state.saabbuy, this.state.saabbuyvalue]});
-      // console.log(this.state.saabbuy +" saab " + input.saabLast.startingPoint);
-      //
-      // console.log(this.state.saab);
-      // console.log(this.state.volvobuy +"volvo");
-      // console.log(this.state.fiatbuy +"fiat");
-      // console.log(this.state.fordbuy +"ford");
       buyStock.addOrder(this.state.type, this.state.saabbuy, input.saabLast.startingPoint,
           this.state.volvobuy, input.volvoLast.startingPoint,
           this.state.fiatbuy, input.fiatLast.startingPoint,
@@ -110,14 +77,6 @@ export default createReactClass({
            (this.state.volvoInStock + this.state.volvobuy),
            (this.state.fordInStock + this.state.fordbuy),
            (this.state.fiatInStock + this.state.fiatbuy),);
-
-
-
-
-           // console.log(this.state.stockportfolio);
-
-
-          // console.log(this.state.account);
   },
 
 componentDidMount() {
@@ -129,9 +88,6 @@ componentDidMount() {
           const account = res.data.filter( test =>{
               return test.status === "account";
           });
-          // console.log(stockportfolio1.data[0]["saab"].amount);
-          // ourStorage.cabinet["top drawer"].folder2
-          // utan.length ? utan[0].saabamount : 0
           this.setState({ account: account.length ? account[0].amount : 0});
           this.setState({ saabamount: utan.length ? utan[0].saabamount : 0});
           this.setState({ volvoamount: utan.length ? utan[0].volvoamount : 0});
@@ -141,34 +97,16 @@ componentDidMount() {
 
       axios.get(`https://project-api.teachmeapp.me/reports/`)
         .then(res => {
-            console.log(res.data);
-            // const utan = res.data.filter( test =>{
-            //     return test.status === false;
-            // });
-            // console.log(utan);
-            // const account = res.data.filter( test =>{
-            //     return test.status === "account";
-            // });
-            // console.log(stockportfolio1.data[0]["saab"].amount);
-            // ourStorage.cabinet["top drawer"].folder2
-            // utan.length ? utan[0].saabamount : 0
-            // this.setState({ account: account.length ? account[0].amount : 0});
             this.setState({ saabInStock: res.data[0].saabInStock});
             this.setState({ volvoInStock: res.data[0].volvoInStock});
             this.setState({ fordInStock: res.data[0].fordInStock});
             this.setState({ fiatInStock: res.data[0].fiatInStock});
         })
-
 },
-
-
 
   render() {
       if (this.state.sended) {
         return <Redirect to="/" />;
-        // console.log(sended);
-        // console.log(this.state.account);
-
     }
 
     return (

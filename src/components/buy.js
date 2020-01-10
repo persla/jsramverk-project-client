@@ -105,10 +105,10 @@ export default createReactClass({
     (input.fiatLast.startingPoint * this.state.fiatbuy) +
     (input.fordLast.startingPoint * this.state.fordbuy)).toFixed(2), localStorage.getItem('currentuser'));
 
-    buyStock.addToAll((this.state.saabInStock - this.state.saabamount),
-    (this.state.volvoInStock - this.state.volvoamount),
-    (this.state.fordInStock - this.state.fordamount),
-    (this.state.fiatInStock - this.state.fiatamount),);
+    buyStock.addToAll((this.state.saabInStock - this.state.saabbuy),
+    (this.state.volvoInStock - this.state.volvobuy),
+    (this.state.fordInStock - this.state.fordbuy),
+    (this.state.fiatInStock - this.state.fiatbuy),);
 
            // console.log(this.state.type);
 

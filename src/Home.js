@@ -17,57 +17,31 @@ import LineExample from './components/dynamic-line'
 class Home extends React.Component{
     constructor(props){
         super(props);
-
+        this.socket = io('https://project-socket.teachmeapp.me');
         this.state = {
             // message: '',
             // saab: '',
             // saabserie: [],
             // volvo: '',
             // timestamp: '',
+            isMounted: false,
             messages: [],
     };
 
 
-
-            // console.log(message);
-            // this.state.messages.filter(function (model) {
-            //     return model.name === "Saab 900";
-            // }).map((model, i) => {
-            //     return (
-            //         this.setState({saab: model.startingPoint})
-            //         // this.setState({saabserie: model.startingPoint}),
-            //
-            //     )
-            // })
-            // this.setState(previousState => ({
-            //     saabserie: [...previousState.saabserie, this.state.saab]
-            // }));
-            // console.log(this.state.saabserie)
-            // this.state.messages.filter(function (model) {
-            //     return model.name === "Volvo 740";
-            // }).map((model, i) => {
-            //     return (
-            //         this.setState({volvo: model.startingPoint})
-            //     )
-            // })
-            // console.log(this.state.saab);
-
-
-
-
-
     }
     componentDidMount() {
+        this.setState({isMounted: true})
         // this.socket = io('localhost:9000');
-        this.socket = io('https://project-socket.teachmeapp.me');
+        // this.socket = io('https://project-socket.teachmeapp.me');
         // const socket = io('https://socket.teachmeapp.me');
         this.socket.on('connect', () => {
        console.log("Connected");
         });
 
-        this.socket.on('disconnect', () => {
-            console.log("Disconnected");
-        });
+        // this.socket.on('disconnect', () => {
+        //     console.log("Disconnected");
+        // });
 
 
         this.socket.on('stocks', (message) => {
@@ -75,15 +49,22 @@ class Home extends React.Component{
               addMessage(message[i]);
             }
                         });
-                        const addMessage = data => {
-
-                            this.setState({messages: [...this.state.messages, data]});
+        const addMessage = data => {
+            this.setState({messages: [...this.state.messages, data]});
                             // console.log(this.state.messages);
                             // console.log(this.state.saab);
                         };
 
 
     }
+
+    componentWillUnmount() {
+        this.setState({isMounted: false})
+        this.socket.on('disconnect', () => {
+            console.log("Disconnected");
+        });
+        this.socket.close()
+  }
 
 
 

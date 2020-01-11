@@ -3,8 +3,15 @@ const options = {
   scales: {
     xAxes: [
       { display: false,
+
         type: "realtime",
         realtime: {
+            format: 'MM',
+         unit: 'month',
+         parser:'MM',
+         displayFormats: { month: 'MM' },
+         max: '2017-10-09 18:43:53',
+         min: '2017-00-02 18:43:53',
           onRefresh: function(chart) {
              chart.data.datasets[0].data.push({
               x: Date.now(),

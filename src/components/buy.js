@@ -124,7 +124,7 @@ componentDidMount() {
 
       <div className="stock-info">
 
-     <h4>Saab 900 1981{this.state.saabInStock}</h4>
+     <h4>Saab 900 1981</h4>
      <p><b>Kurs(&#8383;):</b> {input.saabLast.startingPoint}</p>
      <p><b>Index:</b> {Math.floor(input.saabLast.startingPoint/20*100)}</p>
      <p><b>Tillgängligt:</b> {this.state.saabInStock}</p>

@@ -13,6 +13,7 @@ const axios = require('axios');
 class Account extends React.Component {
     constructor(props) {
         super(props);
+        this.socket = io('https://project-socket.teachmeapp.me');
         this.state = {
             inputAccount: 0,
             account: 0,
@@ -27,6 +28,7 @@ class Account extends React.Component {
             fordcurrentvalue: 0,
             fiatcurrentvalue: 0,
             messages: [],
+            isMounted: false,
             setpage: false,
             // stockportfolio2: {}
 
@@ -119,15 +121,17 @@ componentDidMount() {
         this.setState({ fiatcurrentvalue: this.state.fiatamount ? (input.fiatLast.startingPoint * this.state.fiatamount): 0});
       })
       // this.socket = io('localhost:9000');
-      this.socket = io('https://project-socket.teachmeapp.me');
+      this.setState({isMounted: true})
+      // this.socket = io('localhost:9000');
+      // this.socket = io('https://project-socket.teachmeapp.me');
       // const socket = io('https://socket.teachmeapp.me');
       this.socket.on('connect', () => {
      console.log("Connected");
       });
 
-      this.socket.on('disconnect', () => {
-          console.log("Disconnected");
-      });
+      // this.socket.on('disconnect', () => {
+      //     console.log("Disconnected");
+      // });
 
 
       this.socket.on('stocks', (message) => {
@@ -135,13 +139,19 @@ componentDidMount() {
             addMessage(message[i]);
           }
                       });
-                      const addMessage = data => {
-
-                          this.setState({messages: [...this.state.messages, data]});
+      const addMessage = data => {
+          this.setState({messages: [...this.state.messages, data]});
                           // console.log(this.state.messages);
                           // console.log(this.state.saab);
-                      };
-      // console.log(this.state.stockportfolio);
+                      };;
+}
+
+componentWillUnmount() {
+    this.setState({isMounted: false})
+    this.socket.on('disconnect', () => {
+        console.log("Disconnected");
+    });
+    this.socket.close()
 }
 
 render() {
